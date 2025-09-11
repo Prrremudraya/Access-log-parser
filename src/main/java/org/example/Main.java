@@ -1,22 +1,46 @@
 package org.example;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
-        Scanner console = new Scanner(System.in);
-        System.out.println("Введите первое число:");
-        int number = new Scanner(System.in).nextInt();
-        System.out.println("Введите второе число:");
-        int numbertwo = new Scanner(System.in).nextInt();
+        Scanner scanner = new Scanner(System.in);
+        int gerasFileCount = 0;
 
-        int firstNumber= number;
-        int secondNumber= numbertwo;
-        double quotient = (double) firstNumber/secondNumber;
-        System.out.println("Сумма:" + firstNumber+secondNumber);
-        System.out.println("Разность:"+ (firstNumber-secondNumber));
-        System.out.println("Произведение:" + firstNumber*secondNumber);
-        System.out.println("Частное:" + quotient);
+        while (true) {
+            System.out.println("Введите путь к файлу (или 'exit' для выхода):");
+            String path = scanner.nextLine();
+
+
+            if ("exit".equalsIgnoreCase(path)) {     //вышли из программы
+                System.out.println("Программа завершена.");
+                break;
+            }
+
+            File file = new File(path);
+            boolean fileExists = file.exists();
+            boolean isDirectory = file.isDirectory();
+
+
+            if (!fileExists || isDirectory) {   //это условия
+                if (!fileExists) {
+                    System.out.println("Файл не существует по указанному пути: " + path);
+                } else {
+                    System.out.println("Указанный путь ведет к папке, а не к файлу: " + path);
+                }
+                System.out.println(); // пустая строка для читаемости. надо?
+                continue;
+            }
+
+
+            gerasFileCount++;
+            System.out.println("Путь указан верно");
+            System.out.println("Это файл номер " + gerasFileCount);
+            System.out.println(); // пустая строка для читаемости. надо?
+
+        }
+
+        scanner.close();
     }
 }
